@@ -6,6 +6,8 @@ RUN dnf install -y \
     findutils \
     pypy \
     pypy3 \
+    python26 \
+    python2 \
     python33 \
     python34 \
     python35 \
