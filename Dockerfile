@@ -3,6 +3,8 @@ FROM fedora:26
 MAINTAINER Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>
 
 RUN dnf install -y \
+    --setopt=tsflags=nodocs \
+    --setopt=deltarpm=false \
     findutils \
     pypy \
     pypy3 \
@@ -17,8 +19,8 @@ RUN dnf install -y \
     python2-tox \
     python3-tox \
     python2-virtualenv \
-    python3-virtualenv
-
+    python3-virtualenv \
+    && dnf clean all
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
