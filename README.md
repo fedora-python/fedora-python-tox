@@ -11,8 +11,8 @@ On top of stable Fedora, this Docker image contains:
 - Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6
 - Pypy and Pypy3
 - python2-pip and python3-pip
-- python2-tox and python3-tox
-- python2-virtualenv and python3-virtualenv
+- tox
+- virtualenv
 
 # Example usage
 

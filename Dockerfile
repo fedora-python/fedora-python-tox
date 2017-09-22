@@ -18,10 +18,8 @@ RUN dnf install -y \
     python36 \
     python2-pip \
     python3-pip \
-    python2-tox \
-    python3-tox \
-    python2-virtualenv \
-    python3-virtualenv \
+    /usr/bin/tox \
+    /usr/bin/virtualenv \
     gcc \
     gcc-c++ \
     && dnf clean all
