@@ -18,3 +18,6 @@ RUN dnf install -y \
     python3-tox \
     python2-virtualenv \
     python3-virtualenv
+
+
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
