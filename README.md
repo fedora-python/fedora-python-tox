@@ -12,8 +12,8 @@ On top of stable Fedora, this Docker image contains:
 - Pypy and Pypy3
 - Jython
 - python2-pip and python3-pip
-- python2-tox and python3-tox
-- python2-virtualenv and python3-virtualenv
+- tox
+- virtualenv
 
 # Example usage
 
