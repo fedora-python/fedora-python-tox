@@ -24,3 +24,5 @@ RUN dnf install -y \
 RUN dnf -y copr enable @python/pypy35 && dnf update -y pypy3
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+CMD ["/usr/bin/tox"]
