@@ -8,10 +8,12 @@ RUN dnf install -y \
     dnf-plugins-core \
     findutils \
     jython \
-    pypy \
-    pypy3 \
+    pypy-devel \
+    pypy3-devel \
+    python2-devel \
+    python3-devel \
     python26 \
-    python2 \
+    python27 \
     python33 \
     python34 \
     python35 \
@@ -22,6 +24,8 @@ RUN dnf install -y \
     python3-tox \
     python2-virtualenv \
     python3-virtualenv \
+    gcc \
+    gcc-c++ \
     && dnf clean all
 
 RUN dnf -y copr enable @python/pypy35 && dnf update -y pypy3
