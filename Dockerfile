@@ -6,10 +6,12 @@ RUN dnf install -y \
     --setopt=tsflags=nodocs \
     --setopt=deltarpm=false \
     findutils \
-    pypy \
-    pypy3 \
+    pypy-devel \
+    pypy3-devel \
+    python2-devel \
+    python3-devel \
     python26 \
-    python2 \
+    python27 \
     python33 \
     python34 \
     python35 \
@@ -20,6 +22,8 @@ RUN dnf install -y \
     python3-tox \
     python2-virtualenv \
     python3-virtualenv \
+    gcc \
+    gcc-c++ \
     && dnf clean all
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
