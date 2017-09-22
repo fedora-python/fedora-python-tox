@@ -21,3 +21,5 @@ RUN dnf install -y \
 
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+CMD ["/usr/bin/tox"]

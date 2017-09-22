@@ -19,7 +19,7 @@ On top of stable Fedora, this Docker image contains:
 If you want to use this Docker image as environmet for your test, use this command:
 
 ```
-docker run --rm -it -v $PWD:/src -w /src frenzymadness/fedora-python-tox tox
+docker run --rm -it -v $PWD:/src -w /src frenzymadness/fedora-python-tox
 ```
 
 This command will download an image from Docker hub for you
@@ -40,12 +40,13 @@ Command and argument description:
 - `-v $PWD:/src`  - mount your current working directory to /src inside container
 - `-w`            - use /src (mountpoint) as working directory inside container
 - `frenzymadness/fedora-python-tox` - name of Docker image
-- `tox`           - run `tox`
+
+Tox is run automatically with this container. How cool!
 
 You also can limit Tox tests by passing environment variable to Docker. For example:
 
 ```
-docker run --rm -it -v $PWD:/src -w /src -e TOXENV=py35-django18 frenzymadness/fedora-python-tox tox
+docker run --rm -it -v $PWD:/src -w /src -e TOXENV=py35-django18 frenzymadness/fedora-python-tox
 ```
 
 # License
