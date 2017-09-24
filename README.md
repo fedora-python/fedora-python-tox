@@ -20,7 +20,37 @@ On top of stable Fedora, this Docker image contains:
 If you want to use this Docker image as environmet for your test, use this command:
 
 ```
+cd example_project
 docker run --rm -it -v $PWD:/src -w /src frenzymadness/fedora-python-tox
+
+py26 create: /src/.tox/py26
+py26 installdeps: pytest
+py26 installed: DEPRECATION: Python 2.6 is no longer supported by the Python core team, please upgrade your Python. A future version of pip will drop support for Python 2.6,argparse==1.4.0,ordereddict==1.1,py==1.4.34,pytest==3.2.2
+py26 runtests: PYTHONHASHSEED='3794647945'
+py26 runtests: commands[0] | pytest
+==== test session starts ====
+platform linux4 -- Python 2.6.9, pytest-3.2.2, py-1.4.34, pluggy-0.4.0
+rootdir: /src, inifile:
+collected 10 items
+
+test_fac.py ..........
+
+==== passed in 0.07 seconds ====
+py27 create: /src/.tox/py27
+py27 installdeps: pytest
+py27 installed: py==1.4.34,pytest==3.2.2
+py27 runtests: PYTHONHASHSEED='3794647945'
+py27 runtests: commands[0] | pytest
+==== test session starts ====
+platform linux2 -- Python 2.7.13, pytest-3.2.2, py-1.4.34, pluggy-0.4.0
+rootdir: /src, inifile:
+collected 10 items
+
+test_fac.py ..........
+
+==== passed in 0.06 seconds ====
+
+... etc ...
 ```
 
 This command will download an image from Docker hub for you
@@ -47,7 +77,24 @@ Tox is run automatically with this container. How cool!
 You also can limit Tox tests by passing environment variable to Docker. For example:
 
 ```
-docker run --rm -it -v $PWD:/src -w /src -e TOXENV=py35-django18 frenzymadness/fedora-python-tox
+cd example_project
+docker run --rm -it -v $PWD:/src -w /src -e TOXENV=pypy3 frenzymadness/fedora-python-tox
+pypy3 create: /src/.tox/pypy3
+pypy3 installdeps: pytest
+pypy3 installed: cffi==1.10.1,greenlet==0.4.12,py==1.4.34,pytest==3.2.2,readline==6.2.4.1
+pypy3 runtests: PYTHONHASHSEED='68938415'
+pypy3 runtests: commands[0] | pytest
+==== test session starts ====
+platform linux -- Python 3.5.3[pypy-5.8.0-beta], pytest-3.2.2, py-1.4.34, pluggy-0.4.0
+rootdir: /src, inifile:
+collected 10 items
+
+test_fac.py ..........
+
+==== passed in 0.24 seconds ====
+
+  pypy3: commands succeeded
+  congratulations :)
 ```
 
 # License
