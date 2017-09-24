@@ -2,6 +2,9 @@ FROM fedora:26
 
 MAINTAINER Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>
 
+RUN curl https://copr.fedoraproject.org/coprs/g/python/pypy35/repo/fedora-26/group_python-pypy35-fedora-26.repo \
+    -o /etc/yum.repos.d/group_python-pypy35-fedora-26.repo
+
 RUN dnf install -y \
     --setopt=tsflags=nodocs \
     --setopt=deltarpm=false \
@@ -25,8 +28,6 @@ RUN dnf install -y \
     gcc \
     gcc-c++ \
     && dnf clean all
-
-RUN dnf -y copr enable @python/pypy35 && dnf update -y pypy3
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
