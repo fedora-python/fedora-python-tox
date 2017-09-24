@@ -20,3 +20,4 @@ matrix:
   - env: TOXENV=py36
   - env: TOXENV=pypy
   - env: TOXENV=pypy3
+  - env: TOXENV=jython
