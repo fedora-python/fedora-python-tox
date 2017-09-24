@@ -4,6 +4,7 @@ MAINTAINER Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>
 
 RUN dnf install -y \
     findutils \
+    jython \
     pypy \
     pypy3 \
     python26 \
