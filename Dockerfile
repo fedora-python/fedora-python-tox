@@ -3,6 +3,7 @@ FROM fedora:26
 MAINTAINER Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>
 
 RUN dnf install -y \
+    dnf-plugins-core \
     findutils \
     jython \
     pypy \
@@ -19,3 +20,5 @@ RUN dnf install -y \
     python3-tox \
     python2-virtualenv \
     python3-virtualenv
+
+RUN dnf -y copr enable @python/pypy35 && dnf update -y pypy3
