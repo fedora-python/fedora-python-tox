@@ -8,7 +8,6 @@ RUN curl https://copr.fedoraproject.org/coprs/g/python/pypy35/repo/fedora-26/gro
 RUN dnf install -y \
     --setopt=tsflags=nodocs \
     --setopt=deltarpm=false \
-    dnf-plugins-core \
     findutils \
     jython \
     pypy-devel \
