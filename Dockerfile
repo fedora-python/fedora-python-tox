@@ -1,4 +1,4 @@
-FROM fedora:26
+FROM fedora:27
 
 MAINTAINER Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>
 
