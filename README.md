@@ -17,7 +17,7 @@ On top of stable Fedora, this Docker image contains:
 - tox
 - virtualenv
 
-# Example usage
+# Example usage with local source code
 
 If you want to use this Docker image as environmet for your test, use this command:
 
@@ -97,6 +97,26 @@ test_fac.py ..........
 
   pypy3: commands succeeded
   congratulations :)
+```
+
+# Example usage with GIT URL
+
+Instead of mounting local folder with source code into container, you can
+provide HTTPS URL of your GIT repository and it will be cloned automatically.
+
+For example:
+```
+docker run --rm -it -e GIT_URL=https://github.com/fedora-python/pyp2rpm.git frenzymadness/fedora-python-tox
+Cloning into 'temp_project_dir'...
+remote: Counting objects: 3075, done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 3075 (delta 1), reused 3 (delta 1), pack-reused 3069
+Receiving objects: 100% (3075/3075), 2.97 MiB | 2.57 MiB/s, done.
+Resolving deltas: 100% (2188/2188), done.
+GLOB sdist-make: /temp_project_dir/setup.py
+py27 create: /temp_project_dir/.tox/py27
+
+... etc ...
 ```
 
 # License
