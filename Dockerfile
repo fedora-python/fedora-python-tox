@@ -2,9 +2,6 @@ FROM fedora:27
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
-RUN curl https://copr.fedorainfracloud.org/coprs/g/python/pypy35/repo/fedora-27/group_python-pypy35-fedora-27.repo \
-    -o /etc/yum.repos.d/group_python-pypy35-fedora-27.repo
-
 RUN dnf install -y \
     --setopt=tsflags=nodocs \
     --setopt=deltarpm=false \
