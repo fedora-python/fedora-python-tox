@@ -2,8 +2,8 @@ FROM fedora:27
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
-RUN curl https://copr.fedoraproject.org/coprs/g/python/pypy35/repo/fedora-26/group_python-pypy35-fedora-26.repo \
-    -o /etc/yum.repos.d/group_python-pypy35-fedora-26.repo
+RUN curl https://copr.fedorainfracloud.org/coprs/g/python/pypy35/repo/fedora-27/group_python-pypy35-fedora-27.repo \
+    -o /etc/yum.repos.d/group_python-pypy35-fedora-27.repo
 
 RUN dnf install -y \
     --setopt=tsflags=nodocs \
@@ -20,6 +20,7 @@ RUN dnf install -y \
     python34 \
     python35 \
     python36 \
+    python37 \
     python2-pip \
     python3-pip \
     /usr/bin/tox \
