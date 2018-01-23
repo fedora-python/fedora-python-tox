@@ -4,11 +4,11 @@ services:
   - docker
 
 before_install:
-  - docker build -t frenzymadness/fedora-python-tox .
-  - docker images
+  - docker build -t fivaldi/sandbox .
+  - docker push fivaldi/sandbox docker.io/fivaldi/sandbox
 
 script:
-  - cd example_project && docker run --rm -it -v $PWD:/src -w /src -e TOXENV frenzymadness/fedora-python-tox
+  - cd example_project && docker run --rm -it -v $PWD:/src -w /src -e TOXENV docker.io/fivaldi/sandbox
 
 matrix:
   include:
