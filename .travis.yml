@@ -8,7 +8,10 @@ before_install:
   - docker images
 
 script:
+  # Test project in local folder mounted as a volume into Docker container
   - cd example_project && docker run --rm -it -v $PWD:/src -w /src -e TOXENV frenzymadness/fedora-python-tox
+  # Test project cloned into Docker container from provided GIT URL
+  - docker run --rm -it -e TOXENV -e GIT_URL=https://github.com/frenzymadness/python-tox-example.git frenzymadness/fedora-python-tox
 
 matrix:
   include:
