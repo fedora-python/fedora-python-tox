@@ -1,0 +1,3 @@
+[submodule "example_project"]
+	path = example_project
+	url = https://github.com/frenzymadness/python-tox-example.git
