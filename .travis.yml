@@ -25,3 +25,5 @@ matrix:
   - env: TOXENV=pypy
   - env: TOXENV=pypy3
   - env: TOXENV=jython
+  allow_failures:
+  - env: TOXENV=jython  # https://github.com/tox-dev/tox/issues/782
