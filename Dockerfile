@@ -1,9 +1,9 @@
-FROM fedora:27
+FROM fedora:28
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
-RUN curl https://copr.fedorainfracloud.org/coprs/g/python/pypy35/repo/fedora-27/group_python-pypy35-fedora-27.repo \
-    -o /etc/yum.repos.d/group_python-pypy35-fedora-27.repo
+RUN curl https://copr.fedorainfracloud.org/coprs/g/python/pypy35/repo/fedora-28/group_python-pypy35-fedora-28.repo \
+    -o /etc/yum.repos.d/group_python-pypy35-fedora-28.repo
 
 RUN dnf update -y \
     && dnf install -y \
