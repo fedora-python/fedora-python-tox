@@ -10,7 +10,7 @@ run your Tox tests with all available Python versions in Docker container.
 # Installed packages
 
 On top of stable Fedora, this Docker image contains:
-- Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6, 3.7
+- Python 2.7, 3.4, 3.5, 3.6, 3.7
 - Pypy and Pypy3
 - Jython
 - python2-pip and python3-pip
@@ -25,33 +25,33 @@ If you want to use this Docker image as environmet for your test, use this comma
 cd example_project
 docker run --rm -it -v $PWD:/src -w /src frenzymadness/fedora-python-tox
 
-py26 create: /src/.tox/py26
-py26 installdeps: pytest
-py26 installed: DEPRECATION: Python 2.6 is no longer supported by the Python core team, please upgrade your Python. A future version of pip will drop support for Python 2.6,argparse==1.4.0,ordereddict==1.1,py==1.4.34,pytest==3.2.2
-py26 runtests: PYTHONHASHSEED='3794647945'
-py26 runtests: commands[0] | pytest
-==== test session starts ====
-platform linux4 -- Python 2.6.9, pytest-3.2.2, py-1.4.34, pluggy-0.4.0
-rootdir: /src, inifile:
-collected 10 items
-
-test_fac.py ..........
-
-==== passed in 0.07 seconds ====
 py27 create: /src/.tox/py27
-py27 installdeps: pytest
-py27 installed: py==1.4.34,pytest==3.2.2
-py27 runtests: PYTHONHASHSEED='3794647945'
+py27 installdeps: pytest < 3.3
+py27 installed: py==1.5.3,pytest==3.2.5
+py27 runtests: PYTHONHASHSEED='85819776'
 py27 runtests: commands[0] | pytest
 ==== test session starts ====
-platform linux2 -- Python 2.7.13, pytest-3.2.2, py-1.4.34, pluggy-0.4.0
+platform linux2 -- Python 2.7.15, pytest-3.2.5, py-1.5.3, pluggy-0.4.0
 rootdir: /src, inifile:
 collected 10 items
 
 test_fac.py ..........
 
-==== passed in 0.06 seconds ====
+==== 10 passed in 0.02 seconds ====
 
+py34 create: /src/.tox/py34
+py34 installdeps: pytest < 3.3
+py34 installed: py==1.5.3,pytest==3.2.5
+py34 runtests: PYTHONHASHSEED='1223497559'
+py34 runtests: commands[0] | pytest
+==== test session starts ====
+platform linux -- Python 3.4.8, pytest-3.2.5, py-1.5.3, pluggy-0.4.0
+rootdir: /src, inifile:
+collected 10 items
+
+test_fac.py ..........
+
+==== 10 passed in 0.04 seconds ====
 ... etc ...
 ```
 

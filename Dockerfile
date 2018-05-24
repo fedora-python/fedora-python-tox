@@ -15,9 +15,7 @@ RUN dnf update -y \
     pypy3-devel \
     python2-devel \
     python3-devel \
-    python26 \
     python27 \
-    python33 \
     python34 \
     python35 \
     python36 \
