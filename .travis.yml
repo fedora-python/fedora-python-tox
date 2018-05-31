@@ -15,9 +15,7 @@ script:
 
 matrix:
   include:
-  - env: TOXENV=py26
   - env: TOXENV=py27
-  - env: TOXENV=py33
   - env: TOXENV=py34
   - env: TOXENV=py35
   - env: TOXENV=py36
