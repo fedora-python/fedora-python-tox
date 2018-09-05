@@ -99,6 +99,37 @@ test_fac.py ..........
   congratulations :)
 ```
 
+## Parallel run
+
+If you want to run your tests in parallel, use `detox` command at the end of `docker run` line. Detox is preinstalled in the image but it works only with a local source code.
+
+```
+docker run --rm -it -v $PWD:/src -w /src frenzymadness/fedora-python-tox detox
+py27 create: /src/.tox/py27
+py34 create: /src/.tox/py34
+py35 create: /src/.tox/py35
+py36 create: /src/.tox/py36
+py27 installdeps: pytest
+py36 installdeps: pytest
+py35 installdeps: pytest
+py34 installdeps: pytest
+py36 runtests: PYTHONHASHSEED='639038107'
+py36 runtests: commands[0] | pytest
+py35 runtests: PYTHONHASHSEED='639038107'
+py35 runtests: commands[0] | pytest
+
+... etc ...
+
+  py27: commands succeeded
+  py34: commands succeeded
+  py35: commands succeeded
+  py36: commands succeeded
+  py37: commands succeeded
+  pypy: commands succeeded
+  pypy3: commands succeeded
+  jython: commands succeeded
+```
+
 # Example usage with GIT URL
 
 Instead of mounting local folder with source code into container, you can
