@@ -10,7 +10,7 @@ run your Tox tests with all available Python versions in Docker container.
 # Installed packages
 
 On top of stable Fedora, this Docker image contains:
-- Python 2.7, 3.4, 3.5, 3.6, 3.7
+- Python 2.7, 3.4, 3.5, 3.6, 3.7, 3.8
 - Pypy and Pypy3
 - Jython
 - python2-pip and python3-pip
@@ -125,6 +125,7 @@ py35 runtests: commands[0] | pytest
   py35: commands succeeded
   py36: commands succeeded
   py37: commands succeeded
+  py38: commands succeeded
   pypy: commands succeeded
   pypy3: commands succeeded
   jython: commands succeeded

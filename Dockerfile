@@ -20,6 +20,7 @@ RUN dnf update -y \
     python35 \
     python36 \
     python37 \
+    python38 \
     python2-pip \
     python3-pip \
     /usr/bin/tox \
