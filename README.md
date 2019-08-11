@@ -17,6 +17,10 @@ On top of stable Fedora, this Docker image contains:
 - tox
 - virtualenv
 
+# Docker and Podman
+
+The image works very well with both [Docker](https://www.docker.com/) and [Podman](https://podman.io/) so you can use containers management tool you prefer.
+
 # Example usage with local source code
 
 If you want to use this Docker image as environmet for your test, use this command:
