@@ -25,8 +25,6 @@ RUN dnf update -y \
     python3-pip \
     /usr/bin/tox \
     /usr/bin/virtualenv \
-    # /usr/bin/detox is provided by 2 different packages:
-    python3-detox \
     gcc \
     gcc-c++ \
     git-core \

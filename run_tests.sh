@@ -9,4 +9,4 @@ if [ ! -z $GIT_URL ]; then
     git clone $GIT_URL $TEMP_DIR && cd $TEMP_DIR
 fi
 
-/usr/bin/tox
+/usr/bin/tox $TOX_PARAMS

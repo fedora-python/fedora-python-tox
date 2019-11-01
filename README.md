@@ -103,27 +103,28 @@ test_fac.py ..........
   congratulations :)
 ```
 
-## Parallel run
+## Parallel run and other tox features
 
-If you want to run your tests in parallel, use `detox` command at the end of `docker run` line. Detox is preinstalled in the image but it works only with a local source code.
+You can adjust the behavior of tox by setting TOX_PARAMS variable with any combination of CLI parameters. It's useful for example for parallel run of your tests.
 
 ```
-docker run --rm -it -v $PWD:/src -w /src frenzymadness/fedora-python-tox detox
-py27 create: /src/.tox/py27
-py34 create: /src/.tox/py34
-py35 create: /src/.tox/py35
-py36 create: /src/.tox/py36
-py27 installdeps: pytest
-py36 installdeps: pytest
-py35 installdeps: pytest
-py34 installdeps: pytest
-py36 runtests: PYTHONHASHSEED='639038107'
-py36 runtests: commands[0] | pytest
-py35 runtests: PYTHONHASHSEED='639038107'
-py35 runtests: commands[0] | pytest
+docker run --rm -it -v $PWD:/src -w /src -e TOX_PARAMS="-p auto" frenzymadness/fedora-python-tox
+✔ OK py37 in 12.199 seconds
+✔ OK py38 in 12.212 seconds
+✔ OK py36 in 12.862 seconds
+✔ OK py35 in 12.893 seconds
+✔ OK py27 in 13.382 seconds
+✔ OK py34 in 14.672 seconds
+⠴ [3] pypy | pypy3 | jythonERROR: invocation failed (exit code 1), logfile: /src/.tox/jython/log/jython-0.log
+========================================= log start ==========================================
+jython create: /src/.tox/jython
+ERROR: InterpreterNotFound: jython
 
-... etc ...
-
+========================================== log end ===========================================
+✖ FAIL jython in 4.44 seconds
+✔ OK pypy in 17.398 seconds
+✔ OK pypy3 in 19.189 seconds
+__________________________________________ summary ___________________________________________
   py27: commands succeeded
   py34: commands succeeded
   py35: commands succeeded
