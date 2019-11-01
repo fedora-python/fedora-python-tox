@@ -12,7 +12,6 @@ run your Tox tests with all available Python versions in Docker container.
 On top of stable Fedora, this Docker image contains:
 - Python 2.7, 3.4, 3.5, 3.6, 3.7, 3.8
 - Pypy and Pypy3
-- Jython
 - python2-pip and python3-pip
 - tox
 - virtualenv
@@ -109,21 +108,14 @@ You can adjust the behavior of tox by setting TOX_PARAMS variable with any combi
 
 ```
 docker run --rm -it -v $PWD:/src -w /src -e TOX_PARAMS="-p auto" frenzymadness/fedora-python-tox
-✔ OK py37 in 12.199 seconds
-✔ OK py38 in 12.212 seconds
-✔ OK py36 in 12.862 seconds
-✔ OK py35 in 12.893 seconds
-✔ OK py27 in 13.382 seconds
-✔ OK py34 in 14.672 seconds
-⠴ [3] pypy | pypy3 | jythonERROR: invocation failed (exit code 1), logfile: /src/.tox/jython/log/jython-0.log
-========================================= log start ==========================================
-jython create: /src/.tox/jython
-ERROR: InterpreterNotFound: jython
-
-========================================== log end ===========================================
-✖ FAIL jython in 4.44 seconds
-✔ OK pypy in 17.398 seconds
-✔ OK pypy3 in 19.189 seconds
+✔ OK py37 in 1.664 seconds
+✔ OK py35 in 1.893 seconds
+✔ OK py27 in 1.902 seconds
+✔ OK py38 in 1.913 seconds
+✔ OK py36 in 1.987 seconds
+✔ OK py34 in 2.056 seconds
+✔ OK pypy in 2.904 seconds
+✔ OK pypy3 in 3.688 seconds
 __________________________________________ summary ___________________________________________
   py27: commands succeeded
   py34: commands succeeded
@@ -133,7 +125,7 @@ __________________________________________ summary _____________________________
   py38: commands succeeded
   pypy: commands succeeded
   pypy3: commands succeeded
-  jython: commands succeeded
+  congratulations :)
 ```
 
 # Example usage with GIT URL

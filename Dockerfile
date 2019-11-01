@@ -10,7 +10,6 @@ RUN dnf update -y \
     --setopt=tsflags=nodocs \
     --setopt=deltarpm=false \
     findutils \
-    jython \
     pypy-devel \
     pypy3-devel \
     python2-devel \
