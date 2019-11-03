@@ -12,8 +12,8 @@ script:
   - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV frenzymadness/fedora-python-tox
   # Test project cloned into Docker container from provided GIT URL
   - docker run --rm -it -e TOXENV -e GIT_URL=https://github.com/frenzymadness/python-tox-example.git frenzymadness/fedora-python-tox
-  # Test in local folder with detox
-  - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV frenzymadness/fedora-python-tox detox
+  # Test in local folder in parallel
+  - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV -e TOX_PARAMS="-p auto" frenzymadness/fedora-python-tox
 
 matrix:
   include:
@@ -25,6 +25,3 @@ matrix:
   - env: TOXENV=py38
   - env: TOXENV=pypy
   - env: TOXENV=pypy3
-  - env: TOXENV=jython
-  allow_failures:
-  - env: TOXENV=jython  # https://github.com/tox-dev/tox/issues/782

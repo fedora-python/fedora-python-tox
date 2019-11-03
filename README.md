@@ -12,7 +12,6 @@ run your Tox tests with all available Python versions in Docker container.
 On top of stable Fedora, this Docker image contains:
 - Python 2.7, 3.4, 3.5, 3.6, 3.7, 3.8
 - Pypy and Pypy3
-- Jython
 - python2-pip and python3-pip
 - tox
 - virtualenv
@@ -103,27 +102,21 @@ test_fac.py ..........
   congratulations :)
 ```
 
-## Parallel run
+## Parallel run and other tox features
 
-If you want to run your tests in parallel, use `detox` command at the end of `docker run` line. Detox is preinstalled in the image but it works only with a local source code.
+You can adjust the behavior of tox by setting TOX_PARAMS variable with any combination of CLI parameters. It's useful for example for parallel run of your tests.
 
 ```
-docker run --rm -it -v $PWD:/src -w /src frenzymadness/fedora-python-tox detox
-py27 create: /src/.tox/py27
-py34 create: /src/.tox/py34
-py35 create: /src/.tox/py35
-py36 create: /src/.tox/py36
-py27 installdeps: pytest
-py36 installdeps: pytest
-py35 installdeps: pytest
-py34 installdeps: pytest
-py36 runtests: PYTHONHASHSEED='639038107'
-py36 runtests: commands[0] | pytest
-py35 runtests: PYTHONHASHSEED='639038107'
-py35 runtests: commands[0] | pytest
-
-... etc ...
-
+docker run --rm -it -v $PWD:/src -w /src -e TOX_PARAMS="-p auto" frenzymadness/fedora-python-tox
+✔ OK py37 in 1.664 seconds
+✔ OK py35 in 1.893 seconds
+✔ OK py27 in 1.902 seconds
+✔ OK py38 in 1.913 seconds
+✔ OK py36 in 1.987 seconds
+✔ OK py34 in 2.056 seconds
+✔ OK pypy in 2.904 seconds
+✔ OK pypy3 in 3.688 seconds
+__________________________________________ summary ___________________________________________
   py27: commands succeeded
   py34: commands succeeded
   py35: commands succeeded
@@ -132,7 +125,7 @@ py35 runtests: commands[0] | pytest
   py38: commands succeeded
   pypy: commands succeeded
   pypy3: commands succeeded
-  jython: commands succeeded
+  congratulations :)
 ```
 
 # Example usage with GIT URL
