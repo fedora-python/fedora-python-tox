@@ -1,6 +1,6 @@
 # Fedora + Pythons + Tox in docker image
 
-[![Build Status](https://travis-ci.org/frenzymadness/fedora-python-tox.svg?branch=master)](https://travis-ci.org/frenzymadness/fedora-python-tox)
+[![Build Status](https://travis-ci.org/fedora-python/fedora-python-tox.svg?branch=master)](https://travis-ci.org/fedora-python/fedora-python-tox)
 
 This repository contains source code for Docker image designed to help you
 run your Tox tests with all available Python versions in Docker container.
