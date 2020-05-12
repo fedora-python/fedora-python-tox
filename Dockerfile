@@ -21,7 +21,6 @@ RUN dnf update -y \
     python37 \
     python38 \
     python39 \
-    python2-pip \
     python3-pip \
     /usr/bin/tox \
     /usr/bin/virtualenv \
