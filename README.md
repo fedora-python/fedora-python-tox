@@ -12,7 +12,7 @@ run your Tox tests with all available Python versions in Docker container.
 On top of stable Fedora, this Docker image contains:
 - Python 2.7, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9
 - Pypy and Pypy3
-- python2-pip and python3-pip
+- python3-pip
 - tox
 - virtualenv
 
@@ -62,7 +62,7 @@ This command will download an image from Docker hub for you
 
 ```
 Unable to find image 'frenzymadness/fedora-python-tox:latest' locally
-Trying to pull repository docker.io/frenzymadness/fedora-python-tox ... 
+Trying to pull repository docker.io/frenzymadness/fedora-python-tox ...
 sha256:d4b51931dd86a33552b6a08f39575db336b606f4ccebbc48f390d7f728367a6f: Pulling from docker.io/frenzymadness/fedora-python-tox
 
 ```
