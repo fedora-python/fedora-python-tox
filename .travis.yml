@@ -4,16 +4,16 @@ services:
   - docker
 
 before_install:
-  - docker build -t frenzymadness/fedora-python-tox .
+  - docker build -t fedorapython/fedora-python-tox .
   - docker images
 
 script:
   # Test project in local folder mounted as a volume into Docker container
-  - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV frenzymadness/fedora-python-tox
+  - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV fedorapython/fedora-python-tox
   # Test project cloned into Docker container from provided GIT URL
-  - docker run --rm -it -e TOXENV -e GIT_URL=https://github.com/frenzymadness/python-tox-example.git frenzymadness/fedora-python-tox
+  - docker run --rm -it -e TOXENV -e GIT_URL=https://github.com/frenzymadness/python-tox-example.git fedorapython/fedora-python-tox
   # Test in local folder in parallel
-  - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV -e TOX_PARAMS="-p auto" frenzymadness/fedora-python-tox
+  - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV -e TOX_PARAMS="-p auto" fedorapython/fedora-python-tox
 
 matrix:
   include:
