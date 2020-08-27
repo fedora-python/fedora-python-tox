@@ -14,6 +14,9 @@ script:
   - docker run --rm -it -e TOXENV -e GIT_URL=https://github.com/frenzymadness/python-tox-example.git fedorapython/fedora-python-tox
   # Test in local folder in parallel
   - docker run --rm -it -v $PWD/example_project:/src -w /src -e TOXENV -e TOX_PARAMS="-p auto" fedorapython/fedora-python-tox
+  # Test that we can install (multiple) packages from DNF as devel dependencies. Without those, cffi and pyaml are not installable from sources.
+  # This test overrides the entrypoint, so it has to be specified manually as the first command. It always runs system pip.
+  - 'docker run --rm -it -e DNF_INSTALL="libffi-devel libyaml-devel" fedorapython/fedora-python-tox sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pyyaml"'
 
 matrix:
   include:

@@ -148,6 +148,26 @@ py27 create: /temp_project_dir/.tox/py27
 ... etc ...
 ```
 
+# Installing RPM packages from Fedora
+
+Sometimes, your tests need some system packages (such as C libraries).
+You can install them via `dnf` by setting the `$DNF_INSTALL` environment variable:
+
+```
+docker run --rm -it -v $PWD:/src -w /src -e DNF_INSTALL="libyaml-devel libgit2-devel" fedorapython/fedora-python-tox
+...
+Installed:
+  http-parser-2.9.3-2.fc32.x86_64    libgit2-1.0.1-2.fc32.x86_64
+  libgit2-devel-1.0.1-2.fc32.x86_64  libssh2-1.9.0-5.fc32.x86_64
+  libyaml-devel-0.2.2-3.fc32.x86_64  openssl-devel-1:1.1.1g-1.fc32.x86_64
+  pcre2-devel-10.35-4.fc32.x86_64    pcre2-utf16-10.35-4.fc32.x86_64
+  pcre2-utf32-10.35-4.fc32.x86_64    zlib-devel-1.2.11-21.fc32.x86_64
+
+Complete!
+py27 create: /src/.tox/py27
+...
+```
+
 # License
 
 MIT
