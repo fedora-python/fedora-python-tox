@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script will clone project from $GIT_URL (if defined)
 # and run tox in project directory
