@@ -168,6 +168,12 @@ py27 create: /src/.tox/py27
 ...
 ```
 
+You can install packages by any RPM *Provides*, for example:
+
+* Fedora package names, e.g. `libgit2-devel`,
+* pkgconfig names, e.g. `pkgconfig(libgit2)`, or
+* commands, e.g. `/usr/bin/cowsay`.
+
 # License
 
 MIT
