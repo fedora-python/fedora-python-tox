@@ -29,3 +29,13 @@ matrix:
   - env: TOXENV=py39
   - env: TOXENV=pypy
   - env: TOXENV=pypy3
+
+env:
+  global:
+    secure: g/Miy9Ll4KWqYxvp+F/qhrnXshr6Bdd51pSJiqioKGxJipILLyCWxpmqhQWAJjMfHD+lKzV7RjvZcxvaC5DCqKDghNb8HykQo+8HUpTClLQxgYXKuF9yHnX7kiMsQGUFp7Te6cffR+1bOFL7jtYKDmuwr5bp2MtxSrr6TJ/nKlFQLIGeWFtFIXqjjlJMvm/XqwfxAww0GCTKgJ32dYS8YLGrJw6VcR+KJ6z43ctdNqs0iVE1dYTfxMqlm4/2vPOT1AYQlj/OBMSARCPl+LkRTjHj2+oLjdJjRwdnqS/6lRbbiYrZGf/ANNPbbTndqGzqLm6SLLF7gKM9q97aTIw9OYRd3u4mbHKlU4uLcAzwLC4KCabp/wMT56j5d8ikxdsRPgFPu9XBjb7xe42ZkDWLVZ4qrYCyT3KIzA7/M4ryAQ/p8xqzaUTx/LIxEyk9kSrzHyzcqEdTOcjzh1UihTL7lg3gfy8A3PVBJUbcOhquPdHAoTwPchCKYoog/pt97Ju1rWGmaLKFvFD6ohlIQ24TH0rkZaKylchXZc4Lyk5YThHqOubqf/ujVfNLnPLYgUZsZLotHsU3LZgIjGIprgjlBpN/lxFByxBTd2n09HraUgDbJ6GECBjkf+Z4bftre86wBjoGbjzP4mkqMkfOSo2+sq6vro7HyJQmQsgzd6E8enU=
+
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+      docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+      docker push fedorapython/fedora-python-tox ;
+    fi
