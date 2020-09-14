@@ -1,4 +1,4 @@
-FROM fedora:32
+FROM registry.fedoraproject.org/fedora:32
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
