@@ -2,9 +2,6 @@ FROM registry.fedoraproject.org/fedora:32
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
-RUN curl https://copr.fedorainfracloud.org/coprs/g/python/pypy36/repo/fedora-32/group_python-pypy36-fedora-32.repo \
-    -o /etc/yum.repos.d/group_python-pypy36-fedora-32.repo
-
 RUN dnf update -y \
     && dnf install -y \
     --setopt=tsflags=nodocs \
