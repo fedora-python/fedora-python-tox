@@ -20,20 +20,16 @@ script:
 
 matrix:
   include:
-  - env: TOXENV=py27
-  - env: TOXENV=py34
-  - env: TOXENV=py35
-  - env: TOXENV=py36
-  - env: TOXENV=py37
-  - env: TOXENV=py38
-  - env: TOXENV=py39
-  - env: TOXENV=pypy
-  - env: TOXENV=pypy3
-  # the above toxenvs run on amd64 (x86_64)
-  # we run all toxenvs on the others at once to have a limited matrix:
+  - env: TOXENV=py36,py37,py38,py39
+  - env: TOXENV=py27,py34,py35,pypy,pypy3
+  # the above tests all available toxenvs run on amd64 (x86_64)
+  # we run *some* toxenvs on the other architectures as well:
   - arch: arm64
+    env: TOXENV=py38,py39
   - arch: ppc64le
+    env: TOXENV=py37,py38
   - arch: s390x
+    env: TOXENV=py35,py36,py38,pypy3
 
 env:
   global:
