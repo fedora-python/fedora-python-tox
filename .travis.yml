@@ -60,3 +60,12 @@ jobs:
             fedorapython/fedora-python-tox:s390x;
           docker manifest push fedorapython/fedora-python-tox:latest;
       after_success: # nothing
+
+    - stage: test_deployed_manifest
+      if: branch = master AND type != pull_request
+      env: DOCKER_CLI_EXPERIMENTAL=enabled
+      before_install:
+        - docker pull fedorapython/fedora-python-tox:latest;
+      script:
+        - docker manifest inspect fedorapython/fedora-python-tox:latest | grep '"architecture":' | grep -Ez '(.*(amd64|arm64|ppc64le|s390x).*){4}'
+      after_success: # nothing
