@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:32
+FROM registry.fedoraproject.org/fedora:33
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
@@ -7,17 +7,16 @@ RUN dnf update -y \
     --setopt=tsflags=nodocs \
     --setopt=deltarpm=false \
     findutils \
-    pypy-devel \
+    pypy2-devel \
     pypy3-devel \
-    python2-devel \
     python3-devel \
-    python27 \
-    python34 \
-    python35 \
-    python36 \
-    python37 \
-    python38 \
-    python39 \
+    python2.7 \
+    python3.5 \
+    python3.6 \
+    python3.7 \
+    python3.8 \
+    python3.9 \
+    python3.10 \
     python3-pip \
     /usr/bin/tox \
     /usr/bin/virtualenv \

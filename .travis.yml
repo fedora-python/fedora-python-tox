@@ -32,7 +32,7 @@ after_success:
 jobs:
   include:
     - env: TOXENV=py36,py37,py38,py39
-    - env: TOXENV=py27,py34,py35,pypy,pypy3
+    - env: TOXENV=py27,py310,py35,pypy,pypy3
     # the above tests all available toxenvs run on amd64 (x86_64)
     # we run *some* toxenvs on the other architectures as well:
     - arch: arm64

@@ -10,8 +10,8 @@ run your Tox tests with all available Python versions in Docker container.
 # Installed packages
 
 On top of stable Fedora, this Docker image contains:
-- Python 2.7, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9
-- Pypy and Pypy3
+- Python 2.7, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10
+- Pypy2 and Pypy3
 - python3-pip
 - tox
 - virtualenv
@@ -34,7 +34,7 @@ py27 installed: py==1.5.3,pytest==3.2.5
 py27 runtests: PYTHONHASHSEED='85819776'
 py27 runtests: commands[0] | pytest
 ==== test session starts ====
-platform linux2 -- Python 2.7.15, pytest-3.2.5, py-1.5.3, pluggy-0.4.0
+platform linux2 -- Python 2.7.18, pytest-3.2.5, py-1.5.3, pluggy-0.4.0
 rootdir: /src, inifile:
 collected 10 items
 
@@ -42,13 +42,13 @@ test_fac.py ..........
 
 ==== 10 passed in 0.02 seconds ====
 
-py34 create: /src/.tox/py34
-py34 installdeps: pytest < 3.3
-py34 installed: py==1.5.3,pytest==3.2.5
-py34 runtests: PYTHONHASHSEED='1223497559'
-py34 runtests: commands[0] | pytest
+py35 create: /src/.tox/py35
+py35 installdeps: pytest < 3.3
+py35 installed: py==1.5.3,pytest==3.2.5
+py35 runtests: PYTHONHASHSEED='1223497559'
+py35 runtests: commands[0] | pytest
 ==== test session starts ====
-platform linux -- Python 3.4.8, pytest-3.2.5, py-1.5.3, pluggy-0.4.0
+platform linux -- Python 3.5.10, pytest-3.2.5, py-1.5.3, pluggy-0.4.0
 rootdir: /src, inifile:
 collected 10 items
 
@@ -113,12 +113,10 @@ docker run --rm -it -v $PWD:/src -w /src -e TOX_PARAMS="-p auto" fedorapython/fe
 ✔ OK py27 in 1.902 seconds
 ✔ OK py38 in 1.913 seconds
 ✔ OK py36 in 1.987 seconds
-✔ OK py34 in 2.056 seconds
 ✔ OK pypy in 2.904 seconds
 ✔ OK pypy3 in 3.688 seconds
 __________________________________________ summary ___________________________________________
   py27: commands succeeded
-  py34: commands succeeded
   py35: commands succeeded
   py36: commands succeeded
   py37: commands succeeded
