@@ -16,7 +16,7 @@ script:
   - docker run --rm -v $PWD/example_project:/src -w /src -e TOXENV -e TOX_PARAMS="-p auto" fedorapython/fedora-python-tox:$TRAVIS_CPU_ARCH
   # Test that we can install (multiple) packages from DNF as devel dependencies. Without those, cffi and pygit2 are not installable from sources.
   # This test overrides the entrypoint, so it has to be specified manually as the first command. It always runs system pip.
-  - 'docker run --rm -e DNF_INSTALL="libffi-devel pkgconfig(libgit2) /usr/bin/cowsay" fedorapython/fedora-python-tox:$TRAVIS_CPU_ARCH sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pygit2==1.3.0 && cowsay DONE"'
+  - 'docker run --rm -e DNF_INSTALL="libffi-devel pkgconfig(libgit2) /usr/bin/cowsay" fedorapython/fedora-python-tox:$TRAVIS_CPU_ARCH sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pygit2~=1.3.0 && cowsay DONE"'
 
 env:
   global:
