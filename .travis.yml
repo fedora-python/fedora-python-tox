@@ -65,7 +65,7 @@ jobs:
       if: branch = master AND type != pull_request
       env: DOCKER_CLI_EXPERIMENTAL=enabled
       before_install:
-        - docker pull fedorapython/fedora-python-tox:latest;
+        - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD; docker pull fedorapython/fedora-python-tox:latest;
       script:
         - docker manifest inspect fedorapython/fedora-python-tox:latest | grep '"architecture":' | grep -Ez '(.*(amd64|arm64|ppc64le|s390x).*){4}'
       after_success: # nothing
