@@ -1,0 +1,105 @@
+name: Build, test and push container images
+
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    branches:
+      - 'master'
+  schedule:
+    - cron: '48 23 * * 6'
+
+jobs:
+  build-and-push:
+    name: Build, test and push
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            toxenv: py27,py35,py36,py37,py38,py39,py310,pypy,pypy3
+          - arch: arm64
+            toxenv: py38,py39
+          - arch: ppc64le
+            toxenv: py37,py38
+          - arch: s390x
+            toxenv: py35,py36,py38,pypy3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/${{ matrix.arch }}
+          load: true
+          tags: fedorapython/fedora-python-tox:${{ matrix.arch }}
+      - name: Test local project
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+        run: |
+          docker run --rm --platform linux/${{ matrix.arch }} -v $PWD/example_project:/src -w /src -e TOXENV fedorapython/fedora-python-tox:${{ matrix.arch }}
+      - name: Test remote project
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+        run: |
+          docker run --rm --platform linux/${{ matrix.arch }} -e TOXENV -e GIT_URL=https://github.com/frenzymadness/python-tox-example.git fedorapython/fedora-python-tox:${{ matrix.arch }}
+      - name: Test parallel run
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+        run: |
+          docker run --rm --platform linux/${{ matrix.arch }} -v $PWD/example_project:/src -w /src -e TOXENV -e TOX_PARAMS="-p auto" fedorapython/fedora-python-tox:${{ matrix.arch }}
+      - name: Test dnf install and wheel build
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+        run: |
+          docker run --rm --platform linux/${{ matrix.arch }} -e DNF_INSTALL="libffi-devel pkgconfig(libgit2) /usr/bin/cowsay" fedorapython/fedora-python-tox:${{ matrix.arch }} sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pygit2~=1.5.0 && cowsay DONE"
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        if: github.event_name == 'push'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Push to Dockerhub
+        uses: docker/build-push-action@v2
+        if: github.event_name == 'push'
+        with:
+          context: .
+          platforms: linux/${{ matrix.arch }}
+          push: true
+          tags: fedorapython/fedora-python-tox:${{ matrix.arch }}
+
+  release:
+    name: 'Update and test the :latest manifest'
+    if: github.event_name == 'push'
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull all images
+        run: >
+          for arch in amd64 arm64 ppc64le s390x; do
+            docker pull fedorapython/fedora-python-tox:$arch;
+          done
+      - name: Create and push manifest for the :latest tag
+        env:
+          DOCKER_CLI_EXPERIMENTAL: enabled
+        run: >
+          docker manifest create fedorapython/fedora-python-tox:latest
+          fedorapython/fedora-python-tox:amd64
+          fedorapython/fedora-python-tox:arm64
+          fedorapython/fedora-python-tox:ppc64le
+          fedorapython/fedora-python-tox:s390x;
+          docker manifest push fedorapython/fedora-python-tox:latest;
+      - name: Test the latest manifest
+        run: |
+          docker manifest inspect fedorapython/fedora-python-tox:latest | grep '"architecture":' | grep -Ez '(.*(amd64|arm64|ppc64le|s390x).*){4}'
