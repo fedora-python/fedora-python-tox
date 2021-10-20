@@ -1,5 +1,7 @@
 # Fedora + Pythons + Tox in docker image
 
+![CI/CD status](https://github.com/fedora-python/fedora-python-tox/actions/workflows/build-and-push.yml/badge.svg)
+
 This repository contains source code for Docker image designed to help you
 run your Tox tests with all available Python versions in Docker container.
 
