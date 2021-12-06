@@ -10,7 +10,7 @@ run your Tox tests with all available Python versions in Docker container.
 # Installed packages
 
 On top of stable Fedora, this Docker image contains:
-- Python 2.7, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10
+- Python 2.7, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11
 - Pypy2 and Pypy3
 - python3-pip
 - gcc, gcc-c++, git-core and make
