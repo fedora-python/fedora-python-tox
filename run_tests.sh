@@ -13,4 +13,7 @@ if [ ! -z "$DNF_INSTALL" ]; then
     dnf -y --setopt=tsflags=nodocs --setopt=deltarpm=false install $DNF_INSTALL
 fi
 
+# Mark the current directory as safe for Git:
+git config --global --add safe.directory `pwd`
+
 /usr/bin/tox $TOX_PARAMS
