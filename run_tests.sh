@@ -14,6 +14,6 @@ if [ ! -z "$DNF_INSTALL" ]; then
 fi
 
 # Mark the current directory as safe for Git:
-git --git-dir=~ config --global --add safe.directory $PWD
+git --git-dir=~ config --system --add safe.directory $PWD
 
 /usr/bin/tox $TOX_PARAMS
