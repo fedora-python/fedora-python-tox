@@ -8,7 +8,9 @@ RUN dnf update -y \
     --setopt=deltarpm=false \
     findutils \
     pypy2-devel \
-    pypy3-devel \
+    pypy3.7-devel \
+    pypy3.8-devel \
+    pypy3.9-devel \
     python3-devel \
     python2.7 \
     python3.6 \
