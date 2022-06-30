@@ -11,13 +11,12 @@ RUN dnf update -y \
     pypy3.7-devel \
     pypy3.8-devel \
     pypy3.9-devel \
-    python3-devel \
     python2.7 \
     python3.6 \
     python3.7 \
     python3.8 \
     python3.9 \
-    python3.10 \
+    python3.10-devel \
     python3.11-devel \
     python3-pip \
     /usr/bin/tox \
