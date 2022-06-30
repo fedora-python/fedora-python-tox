@@ -173,6 +173,14 @@ You can install packages by any RPM *Provides*, for example:
 * pkgconfig names, e.g. `pkgconfig(libgit2)`, or
 * commands, e.g. `/usr/bin/cowsay`.
 
+# WORKDIR
+
+If your `tox.ini` file is not in the root directory of your project, set `WORKDIR` to the path you want to cd to before the tests are executed.
+
+```
+docker run --rm -it -e TOXENV=py310-minimal -e GIT_URL=https://github.com/trezor/trezor-firmware.git -e WORKDIR=python fedora-python-tox
+```
+
 # License
 
 MIT
