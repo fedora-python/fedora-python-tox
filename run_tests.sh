@@ -16,4 +16,9 @@ fi
 # Mark the current directory as safe for Git:
 git --git-dir=~ config --system --add safe.directory $PWD
 
+if [ ! -z $WORKDIR ]; then
+    echo "Changing directory to $WORKDIR"
+    cd $WORKDIR
+fi
+
 /usr/bin/tox $TOX_PARAMS
