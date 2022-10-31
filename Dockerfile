@@ -17,7 +17,9 @@ RUN dnf update -y \
     python3.8 \
     python3.9 \
     python3.10-devel \
+    python3.10-tkinter \
     python3.11-devel \
+    python3.11-tkinter \
     python3-pip \
     /usr/bin/tox \
     /usr/bin/virtualenv \
