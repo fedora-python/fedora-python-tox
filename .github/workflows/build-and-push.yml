@@ -11,7 +11,7 @@ on:
     - cron: '48 23 * * 6'
 
 env:
-  FEDORA_VERSION: 35
+  FEDORA_VERSION: 36
 
 jobs:
   build-and-push:
@@ -63,7 +63,7 @@ jobs:
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
-          docker run --rm --platform linux/${{ matrix.arch }} -e DNF_INSTALL="libffi-devel pkgconfig(libgit2) /usr/bin/cowsay" fedorapython/fedora-python-tox:${{ matrix.arch }} sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pygit2~=1.5.0 && cowsay DONE"
+          docker run --rm --platform linux/${{ matrix.arch }} -e DNF_INSTALL="libffi-devel pkgconfig(libgit2) /usr/bin/cowsay" fedorapython/fedora-python-tox:${{ matrix.arch }} sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pygit2~=1.7.0 && cowsay DONE"
       - name: Test external project with WORKDIR
         run: |
           docker run --rm --platform linux/${{ matrix.arch }} -e TOXENV=py310-minimal -e GIT_URL=https://github.com/trezor/trezor-firmware.git -e WORKDIR=python fedorapython/fedora-python-tox:${{ matrix.arch }}
