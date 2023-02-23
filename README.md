@@ -7,6 +7,12 @@ run your Tox tests with all available Python versions in Docker container.
 
 [Docker image is hosted on Docker Hub](https://hub.docker.com/r/fedorapython/fedora-python-tox/) and build automatically after every push to master branch.
 
+# Fedora base image version
+
+We usually add the newest Pythons to all supported Fedora releases. We also have to remove the oldest ones
+from time to time. These are the reasons why we move this container image from Fedora N to N+1 when
+N goes EOL.
+
 # Installed packages
 
 On top of stable Fedora, this Docker image contains:
