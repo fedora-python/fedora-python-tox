@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:36
+FROM registry.fedoraproject.org/fedora:37
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
@@ -8,7 +8,6 @@ RUN dnf update -y \
     --setopt=deltarpm=false \
     findutils \
     pypy2-devel \
-    pypy3.7-devel \
     pypy3.8-devel \
     pypy3.9-devel \
     python2.7 \
