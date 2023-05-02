@@ -11,7 +11,7 @@ on:
     - cron: '48 23 * * 6'
 
 env:
-  FEDORA_VERSION: 36
+  FEDORA_VERSION: 37
 
 jobs:
   build-and-push:
@@ -21,13 +21,13 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            toxenv: py27,py36,py37,py38,py39,py310,py311,py312,pypy,pypy37,pypy38,pypy39
+            toxenv: py27,py36,py37,py38,py39,py310,py311,py312,pypy,pypy38,pypy39
           - arch: arm64
             toxenv: py38,py39,py311
           - arch: ppc64le
             toxenv: py37,py38,py311
           - arch: s390x
-            toxenv: py36,py38,py311,pypy37
+            toxenv: py36,py38,py311,pypy38
     steps:
       - name: Checkout
         uses: actions/checkout@v2
