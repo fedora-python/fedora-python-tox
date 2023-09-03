@@ -10,6 +10,7 @@ RUN dnf update -y \
     pypy2-devel \
     pypy3.8-devel \
     pypy3.9-devel \
+    pypy3.10-devel \
     python2.7 \
     python3.6 \
     python3.7 \
