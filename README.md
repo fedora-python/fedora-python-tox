@@ -16,7 +16,7 @@ N goes EOL.
 # Installed packages
 
 On top of stable Fedora, this Docker image contains:
-- Python 2.7, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12
+- Python 2.7, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13
 - Pypy2, Pypy3.8, Pypy3.9 and Pypy3.10
 - python3-pip
 - gcc, gcc-c++, git-core and make
