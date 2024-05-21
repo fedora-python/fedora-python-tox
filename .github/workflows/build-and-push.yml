@@ -11,7 +11,7 @@ on:
     - cron: '48 23 * * 6'
 
 env:
-  FEDORA_VERSION: 38
+  FEDORA_VERSION: 39
 
 jobs:
   build-and-push:
