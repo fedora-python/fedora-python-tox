@@ -21,7 +21,7 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            toxenv: py27,py36,py37,py38,py39,py310,py311,py312,py313,pypy,pypy39,pypy310
+            toxenv: py27,py36,py37,py38,py39,py310,py311,py312,py313,py314,pypy,pypy39,pypy310
           - arch: arm64
             toxenv: py312
           - arch: ppc64le

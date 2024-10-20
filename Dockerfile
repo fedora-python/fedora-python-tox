@@ -23,6 +23,8 @@ RUN dnf update -y \
     python3.12-tkinter \
     python3.13-devel \
     python3.13-tkinter \
+    python3.14-devel \
+    python3.14-tkinter \
     python3-pip \
     /usr/bin/tox \
     /usr/bin/virtualenv \
