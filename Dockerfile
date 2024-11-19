@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:39
+FROM registry.fedoraproject.org/fedora:40
 
 LABEL maintainer="Lumír 'Frenzy' Balhar <frenzy.madness@gmail.com>"
 
@@ -12,7 +12,6 @@ RUN dnf update -y \
     pypy3.10-devel \
     python2.7 \
     python3.6 \
-    python3.7 \
     python3.8 \
     python3.9 \
     python3.10-devel \

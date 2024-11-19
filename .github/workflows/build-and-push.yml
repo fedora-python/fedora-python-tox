@@ -11,7 +11,7 @@ on:
     - cron: '48 23 * * 6'
 
 env:
-  FEDORA_VERSION: 39
+  FEDORA_VERSION: 40
 
 jobs:
   build-and-push:
@@ -21,11 +21,11 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            toxenv: py27,py36,py37,py38,py39,py310,py311,py312,py313,py314,pypy,pypy39,pypy310
+            toxenv: py27,py36,py38,py39,py310,py311,py312,py313,py314,pypy,pypy39,pypy310
           - arch: arm64
             toxenv: py312
           - arch: ppc64le
-            toxenv: py37,py38,py311
+            toxenv: py38,py311
           - arch: s390x
             toxenv: py39,py310,py312
     steps:
