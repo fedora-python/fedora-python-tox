@@ -10,7 +10,7 @@ if [ ! -z $GIT_URL ]; then
 fi
 
 if [ ! -z "$DNF_INSTALL" ]; then
-    dnf -y --setopt=tsflags=nodocs --setopt=deltarpm=false install $DNF_INSTALL
+    echo $DNF_INSTALL | xargs dnf -y --setopt=tsflags=nodocs --setopt=deltarpm=false install
 fi
 
 # Mark the current directory as safe for Git:
