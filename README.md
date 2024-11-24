@@ -179,6 +179,9 @@ You can install packages by any RPM *Provides*, for example:
 * pkgconfig names, e.g. `pkgconfig(libgit2)`, or
 * commands, e.g. `/usr/bin/cowsay`.
 
+Complex specifications including spaces have to be enclosed in single quotes
+inside the double quotes. For example: `-e DNF_INSTALL="libyaml-devel 'pytest > 7'"`
+
 # WORKDIR
 
 If your `tox.ini` file is not in the root directory of your project, set `WORKDIR` to the path you want to cd to before the tests are executed.
