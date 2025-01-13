@@ -66,7 +66,7 @@ jobs:
           docker run --rm --platform linux/${{ matrix.arch }} -e DNF_INSTALL="libffi-devel 'pkgconfig(libgit2) >= 1.7' /usr/bin/cowsay" fedorapython/fedora-python-tox:${{ matrix.arch }} sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pygit2~=1.14.0 && cowsay DONE"
       - name: Test external project with WORKDIR
         run: |
-          docker run --rm --platform linux/${{ matrix.arch }} -e TOXENV=py310-minimal -e GIT_URL=https://github.com/trezor/trezor-firmware.git -e WORKDIR=python fedorapython/fedora-python-tox:${{ matrix.arch }}
+          docker run --rm --platform linux/${{ matrix.arch }} -e TOXENV=py3 -e GIT_URL=https://github.com/Netflix/nflxprofile.git -e WORKDIR=python fedorapython/fedora-python-tox:${{ matrix.arch }}
       - name: Login to DockerHub
         uses: docker/login-action@v1
         if: github.event_name == 'push' || github.event_name == 'schedule'
