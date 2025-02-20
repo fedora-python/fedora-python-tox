@@ -85,6 +85,21 @@ jobs:
             fedorapython/fedora-python-tox:${{ matrix.arch }}
             fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
 
+  description_update:
+    name: 'Update Dockerhub description'
+    if: github.event_name == 'push'
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: 'Update Dockerhub description'
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: fedorapython/fedora-python-tox
+
   release:
     name: 'Update and test manifests'
     if: github.event_name == 'push' || github.event_name == 'schedule'
