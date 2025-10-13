@@ -9,6 +9,7 @@ on:
       - 'master'
   schedule:
     - cron: '48 23 * * 6'
+  workflow_dispatch:
 
 env:
   FEDORA_VERSION: 41
