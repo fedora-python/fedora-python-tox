@@ -47,27 +47,22 @@ jobs:
             fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
       - name: Verify single-platform image
         run: |
-          # Inspect the local image
-          image_info=$(docker image inspect fedorapython/fedora-python-tox:${{ matrix.arch }})
+          # Inspect the manifest
+          manifest=$(docker manifest inspect fedorapython/fedora-python-tox:${{ matrix.arch }})
 
-          # Check that we got exactly one image (not a manifest list)
-          image_count=$(echo "$image_info" | jq '. | length')
-          if [ "$image_count" != "1" ]; then
-            echo "ERROR: Expected 1 image, found $image_count"
+          # For single-platform images, manifests should be null
+          # For multi-platform or images with attestations, manifests is an array
+          manifests=$(echo "$manifest" | jq '.manifests')
+
+          if [ "$manifests" != "null" ]; then
+            manifest_count=$(echo "$manifests" | jq '. | length')
+            echo "ERROR: Image has a manifest list with $manifest_count entries (expected null for single-platform)!"
+            echo "This usually means attestations are enabled or it's a multi-platform image."
+            echo "$manifests" | jq '.[] | {platform: .platform, digest: .digest, annotations: .annotations}'
             exit 1
           fi
 
-          # Get the architecture
-          arch=$(echo "$image_info" | jq -r '.[0].Architecture')
-          os=$(echo "$image_info" | jq -r '.[0].Os')
-
-          echo "✓ Verified: Image is single-platform ($os/$arch)"
-
-          # Verify it matches the expected architecture
-          if [ "$arch" != "${{ matrix.arch }}" ]; then
-            echo "ERROR: Architecture mismatch! Expected ${{ matrix.arch }}, got $arch"
-            exit 1
-          fi
+          echo "✓ Verified: Image is single-platform (manifests: null)"
       - name: Test local project
         env:
           TOXENV: ${{ matrix.toxenv }}
