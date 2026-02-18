@@ -41,6 +41,8 @@ jobs:
         with:
           context: .
           platforms: linux/${{ matrix.arch }}
+          provenance: false
+          sbom: false
           load: true
           tags: |
             fedorapython/fedora-python-tox:${{ matrix.arch }}
@@ -98,6 +100,8 @@ jobs:
         with:
           context: .
           platforms: linux/${{ matrix.arch }}
+          provenance: false
+          sbom: false
           push: true
           tags: |
             fedorapython/fedora-python-tox:${{ matrix.arch }}
