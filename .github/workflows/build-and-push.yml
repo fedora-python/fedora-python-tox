@@ -43,7 +43,7 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           provenance: false
           sbom: false
-          load: true
+          outputs: type=docker
           tags: |
             fedorapython/fedora-python-tox:${{ matrix.arch }}
             fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
@@ -95,7 +95,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Push to Dockerhub
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         with:
           context: .
