@@ -43,7 +43,7 @@ jobs:
           platforms: linux/${{ matrix.arch }}
           provenance: false
           sbom: false
-          outputs: type=docker
+          outputs: type=docker,oci-mediatypes=false
           tags: |
             fedorapython/fedora-python-tox:${{ matrix.arch }}
             fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
