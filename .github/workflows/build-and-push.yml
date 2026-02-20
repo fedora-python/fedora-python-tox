@@ -37,6 +37,8 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Build
+        env:
+          DOCKER_BUILDKIT: 0
         run: |
           docker build \
             --platform linux/${{ matrix.arch }} \
