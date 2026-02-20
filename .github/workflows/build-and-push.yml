@@ -37,16 +37,12 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Build
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          platforms: linux/${{ matrix.arch }}
-          provenance: false
-          sbom: false
-          outputs: type=docker,oci-mediatypes=false
-          tags: |
-            fedorapython/fedora-python-tox:${{ matrix.arch }}
-            fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
+        run: |
+          docker build \
+            --platform linux/${{ matrix.arch }} \
+            -t fedorapython/fedora-python-tox:${{ matrix.arch }} \
+            -t fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }} \
+            .
       - name: Verify single-platform image
         run: |
           # Inspect the manifest
@@ -95,17 +91,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Push to Dockerhub
-        uses: docker/build-push-action@v6
         if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        with:
-          context: .
-          platforms: linux/${{ matrix.arch }}
-          provenance: false
-          sbom: false
-          push: true
-          tags: |
-            fedorapython/fedora-python-tox:${{ matrix.arch }}
-            fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
+        run: |
+          docker push fedorapython/fedora-python-tox:${{ matrix.arch }}
+          docker push fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
 
   description_update:
     name: 'Update Dockerhub description'
