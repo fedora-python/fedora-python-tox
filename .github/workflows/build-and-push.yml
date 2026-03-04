@@ -15,7 +15,7 @@ env:
   FEDORA_VERSION: 42
 
 jobs:
-  build-and-push:
+  build-test-and-push:
     name: Build, test and push
     runs-on: ubuntu-latest
     strategy:
@@ -31,51 +31,62 @@ jobs:
             toxenv: py39,py310,py312
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
+
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Build
-        uses: docker/build-push-action@v2
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image for testing
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/${{ matrix.arch }}
           load: true
           tags: |
             fedorapython/fedora-python-tox:${{ matrix.arch }}
-            fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
+
       - name: Test local project
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
           docker run --rm --platform linux/${{ matrix.arch }} -v $PWD/example_project:/src -w /src -e TOXENV fedorapython/fedora-python-tox:${{ matrix.arch }}
+
       - name: Test remote project
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
           docker run --rm --platform linux/${{ matrix.arch }} -e TOXENV -e GIT_URL=https://github.com/frenzymadness/python-tox-example.git fedorapython/fedora-python-tox:${{ matrix.arch }}
+
       - name: Test parallel run
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
           docker run --rm --platform linux/${{ matrix.arch }} -v $PWD/example_project:/src -w /src -e TOXENV -e TOX_PARAMS="-p auto" fedorapython/fedora-python-tox:${{ matrix.arch }}
+
       - name: Test dnf install and wheel build
         env:
           TOXENV: ${{ matrix.toxenv }}
         run: |
           docker run --rm --platform linux/${{ matrix.arch }} -e DNF_INSTALL="libffi-devel 'pkgconfig(libgit2) >= 1.9' /usr/bin/cowsay" fedorapython/fedora-python-tox:${{ matrix.arch }} sh -c "/run_tests.sh; pip install -I --no-deps --compile --no-binary :all: cffi pygit2~=1.17.0 && cowsay DONE"
+
       - name: Test external project with WORKDIR
         run: |
           docker run --rm --platform linux/${{ matrix.arch }} -e TOXENV=py3 -e GIT_URL=https://github.com/frenzymadness/nflxprofile.git -e WORKDIR=python fedorapython/fedora-python-tox:${{ matrix.arch }}
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Push to Dockerhub
-        uses: docker/build-push-action@v2
+
+      - name: Build and push platform-specific images
+        uses: docker/build-push-action@v6
         if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         with:
           context: .
@@ -85,61 +96,57 @@ jobs:
             fedorapython/fedora-python-tox:${{ matrix.arch }}
             fedorapython/fedora-python-tox:${{ matrix.arch }}-f${{ env.FEDORA_VERSION }}
 
+  release:
+    name: Create multi-platform manifests
+    if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: build-test-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Create and push multi-platform manifest for :latest
+        run: |
+          docker buildx imagetools create -t fedorapython/fedora-python-tox:latest \
+            fedorapython/fedora-python-tox:amd64 \
+            fedorapython/fedora-python-tox:arm64 \
+            fedorapython/fedora-python-tox:ppc64le \
+            fedorapython/fedora-python-tox:s390x
+
+      - name: Create and push multi-platform manifest for :f${{ env.FEDORA_VERSION }}
+        run: |
+          docker buildx imagetools create -t fedorapython/fedora-python-tox:f${{ env.FEDORA_VERSION }} \
+            fedorapython/fedora-python-tox:amd64-f${{ env.FEDORA_VERSION }} \
+            fedorapython/fedora-python-tox:arm64-f${{ env.FEDORA_VERSION }} \
+            fedorapython/fedora-python-tox:ppc64le-f${{ env.FEDORA_VERSION }} \
+            fedorapython/fedora-python-tox:s390x-f${{ env.FEDORA_VERSION }}
+
+      - name: Verify :latest manifest
+        run: |
+          docker buildx imagetools inspect fedorapython/fedora-python-tox:latest
+
+      - name: Verify :f${{ env.FEDORA_VERSION }} manifest
+        run: |
+          docker buildx imagetools inspect fedorapython/fedora-python-tox:f${{ env.FEDORA_VERSION }}
+
   description_update:
-    name: 'Update Dockerhub description'
+    name: Update Dockerhub description
     if: github.event_name == 'push'
-    needs: build-and-push
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: 'Update Dockerhub description'
+
+      - name: Update Dockerhub description
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: fedorapython/fedora-python-tox
-
-  release:
-    name: 'Update and test manifests'
-    if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Pull all images
-        run: >
-          for arch in amd64 arm64 ppc64le s390x; do
-            docker pull fedorapython/fedora-python-tox:$arch;
-            docker pull fedorapython/fedora-python-tox:${arch}-f${{ env.FEDORA_VERSION }};
-          done
-      - name: Create and push manifest for the :latest tag
-        env:
-          DOCKER_CLI_EXPERIMENTAL: enabled
-        run: >
-          docker manifest create fedorapython/fedora-python-tox:latest
-          fedorapython/fedora-python-tox:amd64
-          fedorapython/fedora-python-tox:arm64
-          fedorapython/fedora-python-tox:ppc64le
-          fedorapython/fedora-python-tox:s390x;
-          docker manifest push fedorapython/fedora-python-tox:latest;
-      - name: Test the latest manifest
-        run: |
-          docker manifest inspect fedorapython/fedora-python-tox:latest | grep '"architecture":' | grep -Ez '(.*(amd64|arm64|ppc64le|s390x).*){4}'
-      - name: Create and push manifest for the versioned tag
-        env:
-          DOCKER_CLI_EXPERIMENTAL: enabled
-        run: >
-          docker manifest create fedorapython/fedora-python-tox:f${{ env.FEDORA_VERSION }}
-          fedorapython/fedora-python-tox:amd64-f${{ env.FEDORA_VERSION }}
-          fedorapython/fedora-python-tox:arm64-f${{ env.FEDORA_VERSION }}
-          fedorapython/fedora-python-tox:ppc64le-f${{ env.FEDORA_VERSION }}
-          fedorapython/fedora-python-tox:s390x-f${{ env.FEDORA_VERSION }};
-          docker manifest push fedorapython/fedora-python-tox:f${{ env.FEDORA_VERSION }};
-      - name: Test the versioned manifest
-        run: |
-          docker manifest inspect fedorapython/fedora-python-tox:f${{ env.FEDORA_VERSION }} | grep '"architecture":' | grep -Ez '(.*(amd64|arm64|ppc64le|s390x).*){4}'
