@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  FEDORA_VERSION: 42
+  FEDORA_VERSION: 43
 
 jobs:
   build-test-and-push:
