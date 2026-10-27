@@ -28,6 +28,10 @@ RUN dnf update -y \
     python3.15-tkinter \
     python3.15-freethreading-devel \
     python3.15-freethreading-tkinter \
+    python3.16-devel \
+    python3.16-tkinter \
+    python3.16-freethreading-devel \
+    python3.16-freethreading-tkinter \
     python3-pip \
     /usr/bin/tox \
     /usr/bin/virtualenv \
